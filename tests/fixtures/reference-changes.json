@@ -1,0 +1,157 @@
+{
+  "replacements": [
+    {
+      "procedure": "ditching",
+      "before": [
+        "Wing Flaps 20°",
+        "Power 300 FPM @ 55 KIAS"
+      ],
+      "after": [
+        "Wing Flaps 20° - FULL",
+        "Power 300 FT/MIN @ 55 KIAS",
+        "(If no power is available, approach at 70 KIAS with Flaps UP or at 65 KIAS with Flaps 10°)",
+        "Cabin Doors UNLATCH",
+        "Touchdown SLOW AS POSSIBLE",
+        "ELT ACTIVATE",
+        "Airplane EVACUATE",
+        "(If necessary, open window and flood cabin to equalize pressure so doors can be opened)"
+      ]
+    },
+    {
+      "procedure": "before-takeoff",
+      "before": [
+        "Wing Flaps (10° preferred) Up"
+      ],
+      "after": [
+        "Wing Flaps (10° preferred) UP - 10°"
+      ]
+    },
+    {
+      "procedure": "cruise",
+      "before": [
+        "Power 2100-2700"
+      ],
+      "after": [
+        "Power 2100-2700 RPM"
+      ]
+    },
+    {
+      "procedure": "run-up",
+      "before": [
+        "175 RPM"
+      ],
+      "after": [
+        "150 RPM"
+      ]
+    },
+    {
+      "procedure": "starting-engine",
+      "before": [
+        "Less than 1.5 volts"
+      ],
+      "after": [
+        "1.5 volts or less"
+      ]
+    },
+    {
+      "procedure": "engine-out-after-takeoff",
+      "before": [
+        "Airspeed 65-70 KIAS",
+        "(70 KIAS for flaps UP; 65 KIAS for flaps 10°-FULL)"
+      ],
+      "after": [
+        "Airspeed 70 KIAS - Flaps UP",
+        "65 KIAS - Flaps 10° - FULL"
+      ]
+    },
+    {
+      "procedure": "landing-no-power",
+      "before": [
+        "Airspeed 65-70 KIAS",
+        "(70 KIAS for flaps UP; 65 KIAS for flaps 10°-FULL)"
+      ],
+      "after": [
+        "Airspeed 70 KIAS - Flaps UP",
+        "65 KIAS - Flaps 10° - FULL"
+      ]
+    },
+    {
+      "procedure": "electrical-fire",
+      "before": [
+        "BUS E Volts (Min 24 volts) Check",
+        "BUS M Volts (Less than 1.5 volts) Check",
+        "BATTS Amps Verify Discharge",
+        "STBY BATT Annunciator Check"
+      ],
+      "after": [
+        "Circuit Breakers Check",
+        "(For OPEN circuit(s), do not reset)",
+        "MASTER Switch (ALT & BAT) ON",
+        "STBY BATT Switch ARM",
+        "AVIONICS Switch (BUS 1) ON",
+        "AVIONICS Switch (BUS 2) ON"
+      ]
+    },
+    {
+      "procedure": "landing-with-power",
+      "before": [
+        "Wing Flaps (On final) FULL"
+      ],
+      "after": [
+        "Wing Flaps (On final) FULL",
+        "Airspeed 65 KIAS"
+      ]
+    },
+    {
+      "procedure": "landing-with-power",
+      "before": [
+        "Touchdown Slightly Tail Low",
+        "Brakes"
+      ],
+      "after": [
+        "Touchdown Slightly Tail Low",
+        "Mixture Control IDLE CUTOFF",
+        "MAGNETOS Switch OFF",
+        "Brakes"
+      ]
+    }
+  ],
+  "endings": {
+    "engine-out-takeoff": {
+      "after": [
+        "STBY BATT Switch OFF"
+      ],
+      "append": [
+        "MASTER Switch (ALT & BAT) OFF"
+      ]
+    },
+    "engine-out-after-takeoff": {
+      "after": [
+        "MASTER Switch (ALT & BAT) OFF"
+      ],
+      "append": [
+        "Cabin Door UNLATCH",
+        "Land STRAIGHT AHEAD"
+      ]
+    }
+  },
+  "additions": {
+    "cabin-fire": [
+      "CABIN FIRE",
+      "STBY BATT Switch OFF MASTER Switch (ALT & BAT) OFF",
+      "Cabin Vents (To avoid drafts) CLOSED",
+      "CABIN HT and CABIN AIR OFF (Push full in, to avoid drafts)",
+      "Fire Extinguisher (If available) ACTIVATE",
+      "IF FIRE HAS BEEN EXTINGUISHED",
+      "Cabin Vents OPEN",
+      "CABIN HT and CABIN AIR ON",
+      "Land AS SOON AS POSSIBLE"
+    ],
+    "wing-fire": [
+      "WING FIRE",
+      "LAND and TAXI Light Switches OFF NAV Light Switch OFF",
+      "STROBE Light Switch OFF PITOT HEAT Switch OFF",
+      "Land AS SOON AS POSSIBLE"
+    ]
+  }
+}

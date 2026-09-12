@@ -1,0 +1,3 @@
+# Only needed for PDF checks. The renderer itself needs only Typst.
+pypdf==6.10.0
+pdfplumber==0.11.9

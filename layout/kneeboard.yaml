@@ -1,0 +1,33 @@
+width_pt: 396
+height_pt: 612
+margin_pt: 18
+top_margin_pt: 18
+bottom_margin_pt: 36
+footer_gap_pt: 12
+column_gutter_pt: 12
+stretch_min_fill: 0.9
+pages:
+  - name: "PREFLIGHT / START"
+    card: N1
+    side: A
+    columns:
+      - [preflight-cabin, preflight-empennage, preflight-right-wing, preflight-nose]
+      - [preflight-left-wing, before-starting-engine, starting-engine]
+  - name: "NORMAL FLIGHT"
+    card: N1
+    side: B
+    columns:
+      - [after-start, run-up, before-takeoff]
+      - [after-takeoff, cruise, approach, before-landing, after-landing, shutdown]
+  - name: "ENGINE OUT / LANDING"
+    card: E1
+    side: A
+    columns:
+      - [engine-out-takeoff, engine-out-after-takeoff, engine-out-flight]
+      - [landing-no-power, landing-with-power, ditching]
+  - name: "FIRES"
+    card: E1
+    side: B
+    columns:
+      - [engine-fire-start, engine-fire-flight]
+      - [electrical-fire, cabin-fire, wing-fire]

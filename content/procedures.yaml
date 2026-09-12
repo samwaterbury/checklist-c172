@@ -1,0 +1,557 @@
+schema_version: 1
+procedures:
+  after-start:
+    title: "AFTER START"
+    category: normal
+    source: "original.pdf, page 2, column 1"
+    blocks:
+      - {id: as-mfd, type: check, challenge: "MFD", response: "Activate"}
+      - {id: as-flaps, type: check, challenge: "Flaps", response: "Up"}
+      - {id: as-atis, type: check, challenge: "ATIS", response: "Obtain"}
+      - {id: as-altimeters, type: check, challenge: "Altimeters (PFD & STBY)", response: "Set"}
+      - {id: as-fuel, type: check, challenge: "Fuel Quantity", response: "Check"}
+      - id: as-instruments
+        type: check
+        challenge: "Flight Instruments"
+        response: "Check"
+        notes: ["(ASI/AI/TC/BARO/VSI/DG)"]
+      - {id: as-autopilot, type: check, challenge: "Autopilot", response: "Engage"}
+      - {id: as-disconnect, type: check, challenge: "A/P TRIM DISC Button", response: "Press"}
+      - {id: as-director, type: check, challenge: "Flight Director", response: "OFF"}
+      - {id: as-clearance, type: check, challenge: "Taxi/IFR Clearance", response: "Obtain"}
+      - {id: as-lights, type: check, challenge: "TAXI/RECOG Lights", response: "ON"}
+      - {id: as-brakes, type: check, challenge: "Brakes", response: "Check"}
+
+  before-landing:
+    title: "BEFORE LANDING"
+    category: normal
+    source: "original.pdf, page 2, column 2"
+    blocks:
+      - {id: bl-backs, type: check, challenge: "Seat Backs", response: "Most Upright Position"}
+      - {id: bl-seats, type: check, challenge: "Seats and Seat Belts", response: "Secured and Locked"}
+      - {id: bl-selector, type: check, challenge: "FUEL SELECTOR Valve", response: "BOTH"}
+      - {id: bl-mixture, type: check, challenge: "Mixture Control", response: "RICH"}
+      - {id: bl-lights, type: check, challenge: "LAND and TAXI Light Switches", response: "ON"}
+      - {id: bl-autopilot, type: check, challenge: "Autopilot", response: "OFF"}
+      - {id: bl-power, type: check, challenge: "CABIN PWR 12V Switch", response: "OFF"}
+
+  starting-engine:
+    title: "STARTING ENGINE"
+    category: normal
+    source: "original.pdf, page 2, column 4"
+    blocks:
+      - {id: se-throttle, type: check, challenge: "Throttle Control", response: "Open 1/4 Inch"}
+      - {id: se-mixture, type: check, challenge: "Mixture Control", response: "Idle Cutoff"}
+      - id: se-battery-test
+        type: check
+        challenge: "STBY BATT Switch"
+        response: "TEST"
+        notes: ["(Hold for 10 seconds, verify green lamp)"]
+      - {id: se-battery-arm, type: check, challenge: "STBY BATT Switch", response: "ARM"}
+      - {id: se-indicating, type: check, challenge: "Engine Indicating System", qualifier: "No red Xs", response: "Check"}
+      - {id: se-bus-e, type: check, challenge: "BUS E Volts", qualifier: "Min 24 volts", response: "Check"}
+      - {id: se-bus-m, type: check, challenge: "BUS M Volts", qualifier: "1.5 volts or less", response: "Check"}
+      - {id: se-batt-amps, type: check, challenge: "BATT S Amps", response: "Verify Discharge"}
+      - {id: se-annunciator, type: check, challenge: "STBY BATT Annunciator", response: "Check"}
+      - {id: se-master, type: check, challenge: "MASTER Switch", response: "ON"}
+      - {id: se-beacon, type: check, challenge: "BEACON Light Switch", response: "ON"}
+      - id: se-priming
+        type: subprocedure
+        title: "Priming Procedure"
+        blocks:
+          - {id: prime-pump-on, type: check, challenge: "Fuel Pump Switch", response: "ON"}
+          - id: prime-rich
+            type: check
+            challenge: "Mixture Control"
+            response: "Full Rich"
+            notes: ["(Approx. 3-5 seconds until stable flow)"]
+          - {id: prime-cutoff, type: check, challenge: "Mixture Control", response: "Idle Cutoff"}
+          - {id: prime-pump-off, type: check, challenge: "Fuel Pump Switch", response: "OFF"}
+      - {id: se-brakes, type: check, challenge: "Brakes", response: "Hold"}
+      - {id: se-propeller, type: check, challenge: "Propeller Area", response: "Clear"}
+      - {id: se-magnetos, type: check, challenge: "Magnetos Switch", response: "START"}
+      - {id: se-mixture-rich, type: check, challenge: "Mixture Control", qualifier: "Advance smoothly", response: "RICH"}
+      - {id: se-oil, type: check, challenge: "Oil Pressure", response: "Check"}
+      - {id: se-amps, type: check, challenge: "Amps", response: "Positive Charge"}
+      - {id: se-low-volts, type: check, challenge: "LOW VOLTS Annunciator", qualifier: "NOT shown", response: "Check"}
+      - {id: se-nav, type: check, challenge: "NAV Light Switch", qualifier: "As required", response: "ON"}
+      - {id: se-avionics, type: check, challenge: "AVIONICS (BUS1 & BUS2)", response: "ON"}
+      - {id: se-lean, type: check, challenge: "Mixture Control", qualifier: "As necessary", response: "Lean"}
+
+  engine-out-flight:
+    title: "ENGINE OUT - DURING FLIGHT"
+    category: emergency
+    source: "original.pdf, page 1, column 3 (the longer variant)"
+    blocks:
+      - {id: eo-airspeed, type: check, challenge: "Airspeed", qualifier: "Best glide speed", response: "68 KIAS"}
+      - {id: eo-shutoff, type: check, challenge: "FUEL SHUTOFF Valve", response: "ON"}
+      - {id: eo-selector, type: check, challenge: "FUEL SELECTOR Valve", response: "BOTH"}
+      - {id: eo-pump-on, type: check, challenge: "FUEL PUMP Switch", response: "ON"}
+      - {id: eo-mixture, type: check, challenge: "Mixture Control", response: "Rich"}
+      - id: eo-magnetos
+        type: check
+        challenge: "MAGNETOS Switch"
+        response: "BOTH"
+        notes: ["(If propeller has stopped, turn MAGNETOS switch to START and advance throttle smoothly from idle)"]
+      - id: eo-pump-off
+        type: check
+        challenge: "FUEL PUMP Switch"
+        response: "OFF"
+        notes: ["(If indicated fuel flow immediately drops to zero, return FUEL PUMP switch to the ON position)"]
+
+  landing-no-power:
+    title: "LANDING - NO POWER"
+    category: emergency
+    source: "original.pdf, page 1, column 3"
+    blocks:
+      - {id: ln-backs, type: check, challenge: "Seat Backs", response: "Most Upright Position"}
+      - {id: ln-seats, type: check, challenge: "Seats and Seat Belts", response: "Secure"}
+      - id: ln-airspeed
+        type: check
+        challenge: "Airspeed"
+        response: "70 KIAS - Flaps UP\n65 KIAS - Flaps 10° - FULL"
+      - {id: ln-mixture, type: check, challenge: "Mixture Control", response: "IDLE CUTOFF"}
+      - {id: ln-shutoff, type: check, challenge: "FUEL SHUTOFF Valve", response: "OFF"}
+      - {id: ln-magnetos, type: check, challenge: "MAGNETOS Switch", response: "OFF"}
+      - {id: ln-flaps, type: check, challenge: "Wing Flaps", qualifier: "FULL recommended", response: "As Required"}
+      - {id: ln-battery, type: check, challenge: "STBY BATT Switch", response: "OFF"}
+      - {id: ln-master, type: check, challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+      - {id: ln-doors, type: check, challenge: "Doors", qualifier: "Prior to touchdown", response: "Unlatch"}
+      - {id: ln-touchdown, type: check, challenge: "Touchdown", response: "Slightly Tail Low"}
+      - {id: ln-brakes, type: check, challenge: "Brakes", response: "Apply Heavily"}
+
+  engine-fire-flight:
+    title: "ENGINE FIRE IN FLIGHT"
+    category: emergency
+    source: "original.pdf, page 1, column 3"
+    blocks:
+      - {id: ef-mixture, type: check, challenge: "Mixture Control", response: "Idle Cutoff"}
+      - {id: ef-shutoff, type: check, challenge: "FUEL SHUTOFF Valve", response: "OFF"}
+      - {id: ef-pump, type: check, challenge: "FUEL PUMP Switch", response: "OFF"}
+      - {id: ef-master, type: check, challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+      - {id: ef-vents, type: check, challenge: "Cabin Vents", response: "Open"}
+      - {id: ef-air, type: check, challenge: "CABIN HT and CABIN AIR", response: "OFF"}
+      - id: ef-airspeed
+        type: check
+        challenge: "Airspeed"
+        response: "100 KIAS"
+        notes: ["(If not extinguished, increase glide speed within airspeed limitations to extinguish)"]
+      - id: ef-landing
+        type: check
+        challenge: "Forced Landing"
+        response: "Execute"
+        notes: ['(Refer to "LANDING - NO POWER")']
+
+  engine-fire-start:
+    title: "ENGINE FIRE DURING START"
+    category: emergency
+    source: "original.pdf, page 1, column 4"
+    blocks:
+      - id: fs-magnetos
+        type: check
+        challenge: "MAGNETOS Switch"
+        response: "START"
+        notes: ["(Continue cranking to start the engine)"]
+      - id: fs-starts
+        type: branch
+        condition: "If Engine Starts"
+        blocks:
+          - {id: fs-power, type: check, challenge: "Power", response: "1800 RPM"}
+          - {id: fs-inspect, type: check, challenge: "Engine", qualifier: "Inspect for damage", response: "SHUTDOWN"}
+      - id: fs-fails
+        type: branch
+        condition: "If Engine Fails to Start"
+        blocks:
+          - {id: fs-throttle, type: check, challenge: "Throttle Control", response: "FULL"}
+          - {id: fs-mixture, type: check, challenge: "Mixture Control", response: "IDLE CUTOFF"}
+          - {id: fs-crank, type: check, challenge: "MAGNETOS Switch", response: "START"}
+          - {id: fs-shutoff, type: check, challenge: "FUEL SHUTOFF Valve", response: "OFF"}
+          - {id: fs-pump, type: check, challenge: "FUEL PUMP Switch", response: "OFF"}
+          - {id: fs-magnetos-off, type: check, challenge: "MAGNETOS Switch", response: "OFF"}
+          - {id: fs-battery, type: check, challenge: "STBY BATT", response: "OFF"}
+          - {id: fs-master, type: check, challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+          - {id: fs-secure, type: check, challenge: "Engine", response: "Secure"}
+          - {id: fs-brake, type: check, challenge: "Parking Brake", response: "Release"}
+          - {id: fs-extinguisher, type: check, challenge: "Fire Extinguisher", response: "Obtain"}
+          - {id: fs-evacuate, type: check, challenge: "Airplane", response: "Evacuate"}
+          - {id: fs-extinguish, type: check, challenge: "Fire", response: "Extinguish"}
+          - {id: fs-damage, type: check, challenge: "Fire Damage", response: "Inspect"}
+
+  electrical-fire:
+    title: "ELECTRICAL FIRE IN FLIGHT"
+    category: emergency
+    source: "original.pdf, page 1, column 4"
+    blocks:
+      - {id: el-battery, type: check, challenge: "STBY BATT Switch", response: "OFF"}
+      - {id: el-master, type: check, challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+      - {id: el-vents-close, type: check, challenge: "Cabin Vents", response: "Closed"}
+      - {id: el-air-off, type: check, challenge: "CABIN HT and CABIN AIR", response: "OFF"}
+      - {id: el-extinguisher, type: check, challenge: "Fire Extinguisher", response: "Activate"}
+      - {id: el-avionics, type: check, challenge: "AVIONICS (BUS1 & BUS2)", response: "OFF"}
+      - {id: el-switches, type: check, challenge: "All Other Switches", qualifier: "Except MAGNETOS", response: "OFF"}
+      - id: el-extinguished
+        type: branch
+        boxed: false
+        condition: "IF FIRE HAS BEEN EXTINGUISHED"
+        blocks:
+          - {id: el-vents-open, type: check, challenge: "Cabin Vents", response: "Open"}
+          - {id: el-air-off-again, type: check, challenge: "CABIN HT and CABIN AIR", response: "OFF"}
+      - id: el-power-needed
+        type: branch
+        boxed: false
+        condition: "IF FIRE HAS BEEN EXTINGUISHED\nAND ELECTRICAL POWER IS NECESSARY"
+        blocks:
+          - id: el-circuit-breakers
+            type: check
+            challenge: "Circuit Breakers"
+            response: "Check"
+            notes: ["(For OPEN circuit(s), do not reset)"]
+          - {id: el-master-on, type: check, challenge: "MASTER Switch (ALT & BAT)", response: "ON"}
+          - {id: el-battery-arm, type: check, challenge: "STBY BATT Switch", response: "ARM"}
+          - {id: el-avionics-bus1-on, type: check, challenge: "AVIONICS Switch (BUS 1)", response: "ON"}
+          - {id: el-avionics-bus2-on, type: check, challenge: "AVIONICS Switch (BUS 2)", response: "ON"}
+
+  cabin-fire:
+    title: "CABIN FIRE"
+    category: emergency
+    source: "C172S-G1000-POH.pdf, printed 3-12, PDF page 78"
+    blocks:
+      - {id: cf-battery, type: check, challenge: "STBY BATT Switch", response: "OFF"}
+      - {id: cf-master, type: check, challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+      - {id: cf-vents-close, type: check, challenge: "Cabin Vents", qualifier: "To avoid drafts", response: "CLOSED"}
+      - id: cf-air-off
+        type: check
+        challenge: "CABIN HT and CABIN AIR"
+        response: "OFF"
+        notes: ["(Push full in, to avoid drafts)"]
+      - {id: cf-extinguisher, type: check, challenge: "Fire Extinguisher", qualifier: "If available", response: "ACTIVATE"}
+      - id: cf-extinguished
+        type: branch
+        boxed: false
+        condition: "IF FIRE HAS BEEN EXTINGUISHED"
+        blocks:
+          - {id: cf-vents-open, type: check, challenge: "Cabin Vents", response: "OPEN"}
+          - {id: cf-air-on, type: check, challenge: "CABIN HT and CABIN AIR", response: "ON"}
+      - {id: cf-land, type: check, challenge: "Land", response: "AS SOON AS POSSIBLE"}
+
+  wing-fire:
+    title: "WING FIRE"
+    category: emergency
+    source: "C172S-G1000-POH.pdf, printed 3-13, PDF page 79"
+    blocks:
+      - {id: wf-landing-taxi, type: check, challenge: "LAND and TAXI Light Switches", response: "OFF"}
+      - {id: wf-nav, type: check, challenge: "NAV Light Switch", response: "OFF"}
+      - {id: wf-strobe, type: check, challenge: "STROBE Light Switch", response: "OFF"}
+      - {id: wf-pitot, type: check, challenge: "PITOT HEAT Switch", response: "OFF"}
+      - {id: wf-land, type: check, challenge: "Land", response: "AS SOON AS POSSIBLE"}
+
+  engine-out-takeoff:
+    title: "ENGINE OUT - DURING TAKEOFF"
+    category: emergency
+    source: "original.pdf, page 1, column 1"
+    blocks:
+      - {id: "engine-out-takeoff-throttle-control", type: "check", challenge: "Throttle Control", response: "IDLE"}
+      - {id: "engine-out-takeoff-brakes", type: "check", challenge: "Brakes", response: "Apply"}
+      - {id: "engine-out-takeoff-wing-flaps", type: "check", challenge: "Wing Flaps", response: "Retract"}
+      - {id: "engine-out-takeoff-mixture-control", type: "check", challenge: "Mixture Control", response: "Idle Cutoff"}
+      - {id: "engine-out-takeoff-magnetos-switch", type: "check", challenge: "MAGNETOS Switch", response: "OFF"}
+      - {id: "engine-out-takeoff-stby-batt-switch", type: "check", challenge: "STBY BATT Switch", response: "OFF"}
+      - {id: "engine-out-takeoff-master-switch-alt-bat", type: "check", challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+
+  engine-out-after-takeoff:
+    title: "ENGINE OUT - AFTER TAKEOFF"
+    category: emergency
+    source: "original.pdf, page 1, column 1"
+    blocks:
+      - id: "engine-out-after-takeoff-airspeed"
+        type: "check"
+        challenge: "Airspeed"
+        response: "70 KIAS - Flaps UP\n65 KIAS - Flaps 10° - FULL"
+      - {id: "engine-out-after-takeoff-mixture-control", type: "check", challenge: "Mixture Control", response: "Idle Cutoff"}
+      - {id: "engine-out-after-takeoff-fuel-shutoff-valve", type: "check", challenge: "FUEL SHUTOFF Valve", response: "OFF"}
+      - {id: "engine-out-after-takeoff-magnetos-switch", type: "check", challenge: "MAGNETOS Switch", response: "OFF"}
+      - {id: "engine-out-after-takeoff-wing-flaps", type: "check", challenge: "Wing Flaps", qualifier: "FULL recommended", response: "As Required"}
+      - {id: "engine-out-after-takeoff-stby-batt-switch", type: "check", challenge: "STBY BATT Switch", response: "OFF"}
+      - {id: "engine-out-after-takeoff-master-switch-alt-bat", type: "check", challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+      - {id: "engine-out-after-takeoff-cabin-door", type: "check", challenge: "Cabin Door", response: "UNLATCH"}
+      - {id: "engine-out-after-takeoff-land", type: "check", challenge: "Land", response: "STRAIGHT AHEAD"}
+
+  ditching:
+    title: "LANDING - DITCHING"
+    category: emergency
+    source: "original.pdf, page 1, column 2"
+    blocks:
+      - id: "ditching-radio"
+        type: "check"
+        challenge: "Radio"
+        qualifier: "On 121.5 MHz"
+        response: "Transmit Mayday"
+        notes: ["(Give location, intentions, and SQUAWK 7700)"]
+      - {id: "ditching-heavy-objects", type: "check", challenge: "Heavy Objects", response: "Secure or Jettison"}
+      - {id: "ditching-seat-backs", type: "check", challenge: "Seat Backs", response: "Most Upright Position"}
+      - {id: "ditching-seats-and-seat-belts", type: "check", challenge: "Seats and Seat Belts", response: "Secure"}
+      - {id: "ditching-wing-flaps", type: "check", challenge: "Wing Flaps", response: "20° - FULL"}
+      - id: "ditching-power"
+        type: "check"
+        challenge: "Power"
+        response: "300 FT/MIN @ 55 KIAS"
+        notes: ["(If no power is available, approach at 70 KIAS with Flaps UP or at 65 KIAS with Flaps 10°)"]
+      - {id: "ditching-doors", type: "check", challenge: "Cabin Doors", response: "UNLATCH"}
+      - {id: "ditching-touchdown", type: "check", challenge: "Touchdown", response: "SLOW AS POSSIBLE"}
+      - {id: "ditching-elt", type: "check", challenge: "ELT", response: "ACTIVATE"}
+      - id: "ditching-evacuate"
+        type: "check"
+        challenge: "Airplane"
+        response: "EVACUATE"
+        notes: ["(If necessary, open window and flood cabin to equalize pressure so doors can be opened)"]
+
+  landing-with-power:
+    title: "LANDING - WITH POWER"
+    category: emergency
+    source: "original.pdf, page 1, column 3"
+    blocks:
+      - {id: "landing-with-power-seat-backs", type: "check", challenge: "Seat Backs", response: "Most Upright Position"}
+      - {id: "landing-with-power-seats-and-seat-belts", type: "check", challenge: "Seats and Seat Belts", response: "Secure"}
+      - {id: "landing-with-power-airspeed", type: "check", challenge: "Airspeed", response: "65 KIAS"}
+      - {id: "landing-with-power-wing-flaps", type: "check", challenge: "Wing Flaps", response: "20°"}
+      - {id: "landing-with-power-wing-flaps-2", type: "check", challenge: "Wing Flaps", qualifier: "On final", response: "FULL"}
+      - {id: "landing-with-power-final-airspeed", type: "check", challenge: "Airspeed", response: "65 KIAS"}
+      - {id: "landing-with-power-stby-batt-switch", type: "check", challenge: "STBY BATT Switch", response: "OFF"}
+      - {id: "landing-with-power-master-switch-alt-bat", type: "check", challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+      - {id: "landing-with-power-doors", type: "check", challenge: "Doors", qualifier: "Prior to touchdown", response: "Unlatch"}
+      - {id: "landing-with-power-touchdown", type: "check", challenge: "Touchdown", response: "Slightly Tail Low"}
+      - {id: "landing-with-power-mixture-control", type: "check", challenge: "Mixture Control", response: "IDLE CUTOFF"}
+      - {id: "landing-with-power-magnetos-switch", type: "check", challenge: "MAGNETOS Switch", response: "OFF"}
+      - {id: "landing-with-power-brakes", type: "check", challenge: "Brakes", response: "Apply Heavily"}
+
+  run-up:
+    title: "RUN UP"
+    category: normal
+    source: "original.pdf, page 2, column 1"
+    blocks:
+      - {id: "run-up-parking-brake", type: "check", challenge: "Parking Brake", response: "Set"}
+      - {id: "run-up-seat-backs-seats-seat-belts", type: "check", challenge: "Seat Backs/Seats/Seat Belts", response: "Secure"}
+      - {id: "run-up-cabin-doors", type: "check", challenge: "Cabin Doors", response: "Closed and Locked"}
+      - {id: "run-up-flight-controls", type: "check", challenge: "Flight Controls", response: "Free and Correct"}
+      - {id: "run-up-elevator-trim-control", type: "check", challenge: "Elevator Trim Control", response: "Set for Takeoff"}
+      - {id: "run-up-flight-instruments", type: "check", challenge: "Flight Instruments", qualifier: "No red Xs", response: "Check"}
+      - {id: "run-up-alt-sel", type: "check", challenge: "ALT SEL", response: "Set"}
+      - {id: "run-up-standby-flight-instruments", type: "check", challenge: "Standby Flight Instruments", response: "Check"}
+      - {id: "run-up-mixture-control", type: "check", challenge: "Mixture Control", response: "Rich"}
+      - {id: "run-up-fuel-selector-valve", type: "check", challenge: "FUEL SELECTOR Valve", response: "BOTH"}
+      - {id: "run-up-throttle-control", type: "check", challenge: "Throttle Control", response: "1800 RPM"}
+      - id: "run-up-magnetos"
+        type: "check"
+        challenge: "Magnetos"
+        response: "Check"
+        notes: ["(RPM drop should not exceed 150 RPM on either magneto or 50 RPM differential between magnetos)"]
+      - {id: "run-up-vac", type: "check", challenge: "VAC", response: "Check"}
+      - {id: "run-up-engine-indicators", type: "check", challenge: "Engine Indicators", response: "Check"}
+      - {id: "run-up-ammeters-voltmeters", type: "check", challenge: "Ammeters & Voltmeters", response: "Check"}
+      - {id: "run-up-annunciators", type: "check", challenge: "Annunciators", response: "Verify None"}
+      - {id: "run-up-throttle-control-2", type: "check", challenge: "Throttle Control", response: "Idle"}
+      - {id: "run-up-throttle-control-3", type: "check", challenge: "Throttle Control", response: "1000 RPM"}
+      - {id: "run-up-com-nav-frequency-s", type: "check", challenge: "COM/NAV Frequency(s)", response: "Set"}
+      - id: "run-up-fms-gps-flight-plan"
+        type: "check"
+        challenge: "FMS/GPS Flight Plan"
+        response: "As Desired"
+        notes: ["(Adjust map settings and set heading bug)"]
+      - {id: "run-up-xpdr", type: "check", challenge: "XPDR", response: "SET"}
+      - {id: "run-up-cabin-pwr-12v-switch", type: "check", challenge: "CABIN PWR 12V Switch", response: "OFF"}
+      - {id: "run-up-cabin-windows", type: "check", challenge: "Cabin Windows", response: "Closed and Locked"}
+      - {id: "run-up-parking-brake-2", type: "check", challenge: "Parking Brake", response: "Release"}
+      - {id: "run-up-mixture-control-2", type: "check", challenge: "Mixture Control", qualifier: "As necessary", response: "Lean"}
+
+  before-takeoff:
+    title: "BEFORE TAKEOFF"
+    category: normal
+    source: "original.pdf, page 2, column 1"
+    blocks:
+      - {id: "before-takeoff-wing-flaps", type: "check", challenge: "Wing Flaps", qualifier: "10° preferred", response: "UP - 10°"}
+      - {id: "before-takeoff-elevator-trim-control", type: "check", challenge: "Elevator Trim Control", response: "Set for Takeoff"}
+      - id: "before-takeoff-mixture-control"
+        type: "check"
+        challenge: "Mixture Control"
+        response: "RICH"
+        notes: ["(Above 3000 feet pressure altitude,\nlean for maximum RPM)"]
+      - {id: "before-takeoff-strobe-light-switch", type: "check", challenge: "STROBE Light Switch", response: "ON"}
+      - {id: "before-takeoff-hdg-sel", type: "check", challenge: "HDG SEL", response: "Set"}
+
+  after-takeoff:
+    title: "AFTER TAKEOFF"
+    category: normal
+    source: "original.pdf, page 2, column 2"
+    blocks:
+      - {id: "after-takeoff-airspeed", type: "check", challenge: "Airspeed", response: "70 KIAS"}
+      - {id: "after-takeoff-wing-flaps", type: "check", challenge: "Wing Flaps", response: "Up"}
+      - {id: "after-takeoff-throttle-control", type: "check", challenge: "Throttle Control", response: "FULL"}
+      - id: "after-takeoff-mixture-control"
+        type: "check"
+        challenge: "Mixture Control"
+        response: "RICH"
+        notes: ["(Above 3000 feet pressure altitude,\nlean for maximum RPM)"]
+
+  cruise:
+    title: "CRUISE"
+    category: normal
+    source: "original.pdf, page 2, column 2"
+    blocks:
+      - id: "cruise-power"
+        type: "check"
+        challenge: "Power"
+        response: "2100-2700 RPM"
+        notes: ["(No more than 75% power recommended)"]
+      - {id: "cruise-engine-instruments", type: "check", challenge: "Engine Instruments", response: "Check"}
+      - {id: "cruise-land-light-switch", type: "check", challenge: "LAND Light Switch", qualifier: "If applicable", response: "OFF"}
+      - {id: "cruise-mixture-control", type: "check", challenge: "Mixture Control", qualifier: "As necessary", response: "Lean"}
+
+  approach:
+    title: "APPROACH"
+    category: normal
+    source: "original.pdf, page 2, column 2"
+    blocks:
+      - {id: "approach-atis-awos", type: "check", challenge: "ATIS/AWOS", response: "Check"}
+      - {id: "approach-altimeters", type: "check", challenge: "Altimeters", response: "Set"}
+      - {id: "approach-approach-brief", type: "check", challenge: "Approach Brief", response: "Complete"}
+      - {id: "approach-alt-sel", type: "check", challenge: "ALT SEL", response: "Set"}
+      - {id: "approach-power", type: "check", challenge: "Power", response: "As Desired"}
+      - {id: "approach-mixture-control", type: "check", challenge: "Mixture Control", qualifier: "If necessary", response: "Adjust"}
+      - {id: "approach-fuel-selector-valve", type: "check", challenge: "FUEL SELECTOR Valve", response: "BOTH"}
+      - {id: "approach-land-light-switch", type: "check", challenge: "LAND Light Switch", response: "ON"}
+      - {id: "approach-cdi-softkey", type: "check", challenge: "CDI Softkey", response: "Select Nav Source"}
+
+  after-landing:
+    title: "AFTER LANDING"
+    category: normal
+    source: "original.pdf, page 2, column 2"
+    blocks:
+      - {id: "after-landing-wing-flaps", type: "check", challenge: "Wing Flaps", response: "UP"}
+      - {id: "after-landing-elevator-trim-control", type: "check", challenge: "Elevator Trim Control", response: "TAKEOFF"}
+      - {id: "after-landing-strobe-light-switch", type: "check", challenge: "STROBE Light Switch", response: "OFF"}
+      - {id: "after-landing-landing-taxi-lights", type: "check", challenge: "Landing/Taxi Lights", response: "As Required"}
+      - {id: "after-landing-taxi-clearance", type: "check", challenge: "Taxi Clearance", response: "Obtain"}
+      - {id: "after-landing-mixture-control", type: "check", challenge: "Mixture Control", qualifier: "As necessary", response: "Lean"}
+
+  shutdown:
+    title: "SHUTDOWN"
+    category: normal
+    source: "original.pdf, page 2, column 2"
+    blocks:
+      - {id: "shutdown-throttle-control", type: "check", challenge: "Throttle Control", response: "1000 RPM"}
+      - {id: "shutdown-electrical-equipment", type: "check", challenge: "Electrical Equipment", response: "OFF"}
+      - {id: "shutdown-avionics-bus1-bus2", type: "check", challenge: "AVIONICS (BUS1 & BUS2)", response: "OFF"}
+      - {id: "shutdown-mixture-control", type: "check", challenge: "Mixture Control", response: "Idle Cutoff"}
+      - {id: "shutdown-magnetos-switch", type: "check", challenge: "MAGNETOS Switch", response: "OFF"}
+      - {id: "shutdown-master-switch-alt-bat", type: "check", challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+      - {id: "shutdown-stby-batt-switch", type: "check", challenge: "STBY BATT Switch", response: "OFF"}
+      - {id: "shutdown-control-wheel-lock", type: "check", challenge: "Control Wheel Lock", response: "Install"}
+      - {id: "shutdown-fuel-selector-valve", type: "check", challenge: "FUEL SELECTOR Valve", response: "Left or Right"}
+
+  preflight-cabin:
+    title: "PREFLIGHT - CABIN"
+    category: normal
+    source: "original.pdf, page 2, column 3"
+    blocks:
+      - {id: "preflight-cabin-pitot-tube-cover", type: "check", challenge: "Pitot Tube Cover", response: "Remove"}
+      - {id: "preflight-cabin-poh", type: "check", challenge: "POH", response: "Accessible to Pilot"}
+      - {id: "preflight-cabin-g1000-ref-guide", type: "check", challenge: "G1000 Ref Guide", response: "Accessible to Pilot"}
+      - {id: "preflight-cabin-airplane-weight-and-balance", type: "check", challenge: "Airplane Weight and Balance", response: "Checked"}
+      - {id: "preflight-cabin-control-wheel-lock", type: "check", challenge: "Control Wheel Lock", response: "Remove"}
+      - {id: "preflight-cabin-magnetos-switch", type: "check", challenge: "MAGNETOS Switch", response: "OFF"}
+      - {id: "preflight-cabin-avionics-switch-bus1-bus2", type: "check", challenge: "AVIONICS Switch (BUS1 & BUS2)", response: "OFF"}
+      - {id: "preflight-cabin-master-switch-alt-bat", type: "check", challenge: "MASTER Switch (ALT & BAT)", response: "ON"}
+      - {id: "preflight-cabin-primary-flight-display-pfd", type: "check", challenge: "Primary Flight Display (PFD)", response: "Check"}
+      - {id: "preflight-cabin-fuel-qty-l-r", type: "check", challenge: "Fuel QTY (L & R)", response: "Check"}
+      - {id: "preflight-cabin-low-fuel-annunciators", type: "check", challenge: "LOW FUEL Annunciators", qualifier: "NOT shown", response: "Check"}
+      - {id: "preflight-cabin-oil-pressure-annunciator", type: "check", challenge: "OIL PRESSURE Annunciator", response: "Verify Shown"}
+      - {id: "preflight-cabin-low-vacuum-annunciator", type: "check", challenge: "LOW VACUUM Annunciator", response: "Verify Shown"}
+      - {id: "preflight-cabin-avionics-bus1-bus2", type: "check", challenge: "AVIONICS (BUS1 & BUS2)", response: "Verify Fans"}
+      - id: "preflight-cabin-pitot-heat-switch"
+        type: "check"
+        challenge: "PITOT HEAT Switch"
+        response: "ON/Verify"
+        notes: ["(Check tube is warm within 30 seconds)"]
+      - {id: "preflight-cabin-lights", type: "check", challenge: "Lights", response: "ON/Verify"}
+      - {id: "preflight-cabin-flaps", type: "check", challenge: "Flaps", response: "Down"}
+      - {id: "preflight-cabin-pitot-heat-switch-2", type: "check", challenge: "PITOT HEAT Switch", response: "OFF"}
+      - {id: "preflight-cabin-lights-2", type: "check", challenge: "Lights", response: "OFF"}
+      - {id: "preflight-cabin-low-volts-annunciator", type: "check", challenge: "LOW VOLTS Annunciator", response: "Verify Shown"}
+      - {id: "preflight-cabin-master-switch-alt-bat-2", type: "check", challenge: "MASTER Switch (ALT & BAT)", response: "OFF"}
+      - {id: "preflight-cabin-elevator-trim-control", type: "check", challenge: "Elevator Trim Control", response: "TAKEOFF"}
+      - {id: "preflight-cabin-fuel-selector-valve", type: "check", challenge: "FUEL SELECTOR Valve", response: "BOTH"}
+      - {id: "preflight-cabin-alt-static-air-valve", type: "check", challenge: "ALT STATIC AIR Valve", response: "Check"}
+      - {id: "preflight-cabin-fire-extinguisher", type: "check", challenge: "Fire Extinguisher", response: "Check"}
+
+  preflight-empennage:
+    title: "PREFLIGHT - EMPENNAGE"
+    category: normal
+    source: "original.pdf, page 2, column 3"
+    blocks:
+      - {id: "preflight-empennage-baggage-door-compartment", type: "check", challenge: "Baggage Door Compartment", response: "Check"}
+      - {id: "preflight-empennage-rudder-gust-lock", type: "check", challenge: "Rudder Gust Lock", response: "Remove"}
+      - {id: "preflight-empennage-tail-tiedown", type: "check", challenge: "Tail Tiedown", response: "Disconnect"}
+      - {id: "preflight-empennage-elevator-trim-tab", type: "check", challenge: "Elevator Trim Tab", response: "Check"}
+      - {id: "preflight-empennage-antennas", type: "check", challenge: "Antennas", response: "Check"}
+
+  preflight-right-wing:
+    title: "PREFLIGHT - RIGHT WING"
+    category: normal
+    source: "original.pdf, page 2, column 3"
+    blocks:
+      - {id: "preflight-right-wing-flap", type: "check", challenge: "Flap", response: "Check"}
+      - {id: "preflight-right-wing-aileron", type: "check", challenge: "Aileron", response: "Check"}
+      - {id: "preflight-right-wing-wing-tiedown", type: "check", challenge: "Wing Tiedown", response: "Disconnect"}
+      - {id: "preflight-right-wing-main-wheel-tire", type: "check", challenge: "Main Wheel Tire", response: "Check"}
+      - {id: "preflight-right-wing-fuel-tank-sumps", type: "check", challenge: "Fuel Tank Sumps", response: "Check"}
+      - {id: "preflight-right-wing-fuel-quantity", type: "check", challenge: "Fuel Quantity", response: "Check"}
+      - {id: "preflight-right-wing-fuel-filler-cap", type: "check", challenge: "Fuel Filler Cap", response: "Secure & Vent Clear"}
+
+  preflight-nose:
+    title: "PREFLIGHT - NOSE"
+    category: normal
+    source: "original.pdf, page 2, column 3"
+    blocks:
+      - {id: "preflight-nose-fuel-sumps", type: "check", challenge: "Fuel Sumps", response: "Check"}
+      - id: "preflight-nose-oil-level"
+        type: "check"
+        challenge: "Oil Level"
+        response: "Check"
+        notes: ["(Do not operate with less than 5 quarts)"]
+      - {id: "preflight-nose-dipstick-filler-cap", type: "check", challenge: "Dipstick/Filler Cap", response: "Secure"}
+      - {id: "preflight-nose-engine-cooling-air-inlets", type: "check", challenge: "Engine Cooling Air Inlets", response: "Check"}
+      - {id: "preflight-nose-alternator-belt", type: "check", challenge: "Alternator Belt", response: "Check"}
+      - {id: "preflight-nose-propeller-spinner", type: "check", challenge: "Propeller & Spinner", response: "Check"}
+      - {id: "preflight-nose-air-filter", type: "check", challenge: "Air Filter", response: "Check"}
+      - {id: "preflight-nose-nosewheel-strut-tire", type: "check", challenge: "Nosewheel Strut & Tire", response: "Check"}
+
+  preflight-left-wing:
+    title: "PREFLIGHT - LEFT WING"
+    category: normal
+    source: "original.pdf, page 2, column 4"
+    blocks:
+      - {id: "preflight-left-wing-static-source-opening", type: "check", challenge: "Static Source Opening", response: "Check"}
+      - {id: "preflight-left-wing-fuel-tank-vent-opening", type: "check", challenge: "Fuel Tank Vent Opening", response: "Check"}
+      - {id: "preflight-left-wing-stall-warning-opening", type: "check", challenge: "Stall Warning Opening", response: "Check"}
+      - {id: "preflight-left-wing-wing-tiedown", type: "check", challenge: "Wing Tiedown", response: "Disconnect"}
+      - {id: "preflight-left-wing-main-wheel-tire", type: "check", challenge: "Main Wheel Tire", response: "Check"}
+      - {id: "preflight-left-wing-fuel-tank-sumps", type: "check", challenge: "Fuel Tank Sumps", response: "Check"}
+      - {id: "preflight-left-wing-fuel-quantity", type: "check", challenge: "Fuel Quantity", response: "Check"}
+      - {id: "preflight-left-wing-fuel-filler-cap", type: "check", challenge: "Fuel Filler Cap", response: "Secure & Vent Clear"}
+      - {id: "preflight-left-wing-flap", type: "check", challenge: "Flap", response: "Check"}
+      - {id: "preflight-left-wing-aileron", type: "check", challenge: "Aileron", response: "Check"}
+
+  before-starting-engine:
+    title: "BEFORE STARTING ENGINE"
+    category: normal
+    source: "original.pdf, page 2, column 4"
+    blocks:
+      - {id: "before-starting-engine-preflight-inspection", type: "check", challenge: "Preflight Inspection", response: "Complete"}
+      - {id: "before-starting-engine-passenger-briefing", type: "check", challenge: "Passenger Briefing", response: "Complete"}
+      - {id: "before-starting-engine-seats-and-seat-belts", type: "check", challenge: "Seats and Seat Belts", response: "Adjust and Lock"}
+      - {id: "before-starting-engine-brakes", type: "check", challenge: "Brakes", response: "Test and Set"}
+      - {id: "before-starting-engine-circuit-breakers", type: "check", challenge: "Circuit Breakers", response: "Check In"}
+      - {id: "before-starting-engine-electrical-equipment", type: "check", challenge: "Electrical Equipment", response: "OFF"}
+      - {id: "before-starting-engine-avionics-bus1-bus2", type: "check", challenge: "AVIONICS (BUS1 & BUS2)", response: "OFF"}
+      - {id: "before-starting-engine-fuel-selector-valve", type: "check", challenge: "FUEL SELECTOR Valve", response: "BOTH"}
+      - {id: "before-starting-engine-fuel-shutoff-valve", type: "check", challenge: "FUEL SHUTOFF Valve", response: "ON"}

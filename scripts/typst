@@ -1,0 +1,21 @@
+#!/bin/sh
+# Prefer an explicit compiler, then the project copy, then PATH.
+set -eu
+project_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+compiler=${TYPST:-}
+if [ -z "$compiler" ]; then
+  if [ -x "$project_root/.tools/typst-aarch64-apple-darwin/typst" ]; then
+    compiler="$project_root/.tools/typst-aarch64-apple-darwin/typst"
+  else
+    compiler=$(command -v typst || true)
+  fi
+fi
+if [ -z "$compiler" ]; then
+  echo 'Install Typst 0.15.1 or set TYPST to its executable. See README.md.' >&2
+  exit 1
+fi
+case "$("$compiler" --version)" in
+  'typst 0.15.1 '*) ;;
+  *) echo 'This project requires Typst 0.15.1 for reproducible layout.' >&2; exit 1 ;;
+esac
+exec "$compiler" "$@"
