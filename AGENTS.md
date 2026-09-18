@@ -2,11 +2,11 @@
 
 This project renders a personal C172S G1000 checklist from YAML using Typst. The current output is four 5.5 × 8.5 in pages: two duplex kneeboard cards. The normal card covers preflight through shutdown; the emergency card groups engine failures and forced landings on one side and fires on the other. All 27 authored procedures appear once.
 
-Use the [README](README.md) for everyday build, watch, and test commands.
+Use the [README](README.md) for everyday build and watch commands.
 
 ## Toolchain and printing
 
-Rendering requires **Typst 0.15.1** and Helvetica Neue (Medium, Light, Light Italic, Bold, Bold Italic) plus Helvetica Bold. The PDF embeds font subsets; this repository does not redistribute fonts. No Python, Node, web server, or external Typst packages are needed to render.
+Rendering the half-Letter cards requires **Typst 0.15.1** and Helvetica Neue (Medium, Light, Light Italic, Bold, Bold Italic) plus Helvetica Bold. The PDF embeds font subsets; this repository does not redistribute fonts. Assembling the Letter print PDF also requires Python and `pypdf`, pinned in `requirements.txt`. No Node, web server, or external Typst packages are needed.
 
 `scripts/typst` checks the compiler version and prefers `TYPST`, then the local compiler under `.tools/`, then PATH. To install on an Apple Silicon Mac:
 
@@ -22,6 +22,10 @@ On another platform, install the matching [official release](https://github.com/
 
 Print at **100% / actual size**. Pair pages 1–2 and 3–4 for duplex printing; check orientation with a proof sheet before laminating. Larger stock can be trimmed without scaling. Footers contain only the section and aircraft names.
 
+`make build` produces both `output/pdf/checklist.pdf` and `output/pdf/checklist-letter.pdf`. Set `PYTHON` to the environment with the installed requirements. `make watch` updates the half-Letter PDF only; rebuild both before printing.
+
+The Letter PDF is two 11 × 8.5 in landscape sides, assembled from the finished half-Letter pages without scaling or rasterization. Front: pages 1 and 3, left to right. Back: pages 4 and 2. Print duplex with **short-edge flipping**, at 100%, and cut vertically at 5.5 inches. One sheet yields a complete two-card set. The PDF includes print preferences, but verify the print dialog and one proof: printer software may override them. Do not apply an additional two-pages-per-sheet setting. The assembly script rejects sources that are not exactly four unrotated half-Letter pages.
+
 ## Content and layout
 
 | File | Purpose |
@@ -32,6 +36,7 @@ Print at **100% / actual size**. Pair pages 1–2 and 3–4 for duplex printing;
 | [components.typ](components.typ) | Rows, notes, groups, sections, validation, and overflow checks |
 | [sheet.typ](sheet.typ) | Column geometry |
 | [main.typ](main.typ) | Document setup, footers, and page rendering |
+| [scripts/impose.py](scripts/impose.py) | Lossless placement of finished cards onto duplex Letter sides |
 
 ```yaml
 - id: se-bus-e
@@ -53,9 +58,7 @@ After a failed build, Typst may leave the **last successful PDF** in place. Chec
 
 ## Verification
 
-The tests check the four-page layout, card pairing, fonts and sizes, every procedure's text and order, margins and footer clearance, spacing, wrapping, and validation failures. Synthetic examples live in `tests/fixture.typ`.
-
-The independent reference check reads [original.pdf](original.pdf), normalizes typographic differences, and applies only the reviewed exceptions in [tests/fixtures/reference-changes.json](tests/fixtures/reference-changes.json). That fixture includes separately transcribed expectations for the two added fire procedures. It is not generated from the content being tested. Update relevant expectations only after reviewing an intentional wording change. See [fixture guidance](tests/fixtures/README.md).
+Keep the half-Letter document as the single layout source; do not duplicate its content or layout for printing. After changes, rebuild both PDFs and check page dimensions, content, margins, and front/back placement.
 
 Render changed pages to images and inspect them after layout changes. These checks establish document reproduction, not operational correctness.
 
@@ -69,4 +72,4 @@ Render changed pages to images and inspect them after layout changes. These chec
 - [Physical-format references](docs/checklist-format-reference.md)
 - [Text-size experiments](docs/text-size-study.md)
 
-The comparison layouts and their supporting code were retired after selecting this format. Commit `9174e4a` preserves their last implementation. `tmp/` is ignored scratch space; the useful local POH extraction remains under `tmp/poh-review/`. The current PDF and original reference PDF remain tracked in Git.
+The comparison layouts and their supporting code were retired after selecting this format. Commit `9174e4a` in the earlier repository history preserves their last implementation. Keep temporary previews out of commits; `tmp/` is not currently ignored in this checkout. Generated PDFs live in `output/pdf/` and are tracked in Git. The original reference PDF is not included in this checkout.

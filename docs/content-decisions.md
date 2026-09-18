@@ -1,6 +1,6 @@
 # Content decisions
 
-This is the current decision record, consolidated during repository cleanup after commit `9174e4a`. Update this file when decisions change; leave the two historical audit reports as baseline evidence. Procedure text lives in [procedures.yaml](../content/procedures.yaml), and independent test exceptions live in [reference-changes.json](../tests/fixtures/reference-changes.json).
+This is the current decision record, consolidated during repository cleanup after commit `9174e4a`. Update this file when decisions change; leave the two historical audit reports as baseline evidence. Procedure text lives in [procedures.yaml](../content/procedures.yaml).
 
 ## References and review policy
 
